@@ -1,0 +1,23 @@
+/* Сужаем ширину контента для лучшей читаемости на десктопе */
+.md-main__inner {
+  max-width: 1100px;
+}
+
+/* Выделяем таблицы контента на индекс-страницах */
+.md-typeset table {
+  border-collapse: collapse;
+}
+
+.md-typeset table th,
+.md-typeset table td {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  padding: 0.4rem 0.6rem;
+}
+
+/* Подсветка CTA-ссылок */
+.md-typeset a.cta {
+  font-weight: 600;
+  color: var(--md-primary-fg-color);
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+}

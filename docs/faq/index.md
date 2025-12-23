@@ -1,17 +1,15 @@
 ---
-icon: lucide/help-circle
+title: "FAQ"
+icon: material/help-circle-outline
 ---
 
-# FAQ
+# Часто задаваемые вопросы
 
-## How do I preview my changes?
+??? question "Как найти нужный раздел?"
+    Используйте поиск по ключевым словам; результаты подсвечиваются на странице.
 
-Run `zensical serve` from the project root. The local server reloads whenever you update a file.
+??? question "Есть ли тёмная тема?"
+    Да, переключатель темы доступен в шапке (default/slate).
 
-## Where should I store images and diagrams?
-
-Place final assets in `docs/assets/` and keep editable diagram sources in `docs/assets/diagram-sources/`.
-
-## Can I reuse the sample components?
-
-Yes. The snippets in the [authoring examples](../reference/authoring-examples.md) are ready to copy into any page.
+??? question "Как предложить правку?"
+    Создайте тикет или PR. Указывайте ссылку на страницу и кратко опишите изменение.
