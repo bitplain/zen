@@ -297,7 +297,8 @@ toggle.name = "Switch to light mode"
 # - https://zensical.org/docs/authoring/icons-emojis/#search
 # ----------------------------------------------------------------------------
 [project.theme.icon]
-logo = "assets/branding/logo.svg"
+# Используем встроенную иконку Lucide; при наличии кастомного файла перенесите его в docs/assets/branding и укажите путь без дублирования расширений.
+logo = "lucide/rocket"
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.
