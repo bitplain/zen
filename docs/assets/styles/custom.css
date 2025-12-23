@@ -1,0 +1,44 @@
+:root {
+  --brand-primary: #10b981;
+  --brand-primary-strong: #0ea5e9;
+}
+
+/* Tighten up the header spacing so the logo and tabs sit closer together */
+.md-header__inner {
+  gap: 0.75rem;
+}
+
+/* Give the navigation tabs a subtle underline on hover for clarity */
+.md-tabs__link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.md-tabs__link:hover {
+  color: var(--brand-primary-strong);
+}
+
+.md-tabs__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.25rem;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-strong));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.md-tabs__link:hover::after,
+.md-tabs__link--active::after {
+  transform: scaleX(1);
+}
+
+/* Softer card styling for code blocks and tips */
+.md-typeset pre,
+.md-typeset .admonition {
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgb(15 23 42 / 8%);
+}
