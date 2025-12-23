@@ -50,6 +50,7 @@ nav = [
   { "Процессы" = "processes/index.md" },
   { "How-to" = [ { "Обзор" = "how-to/index.md" }, { "Сброс пароля" = "how-to/reset-password.md" } ] },
   { "Справочник" = "reference/index.md" },
+  { "ViPNet" = [ { "Обзор" = "vipnet/index.md" }, { "Обновление" = "vipnet/obnovlenie.md" }, { "Команды" = "vipnet/komandy.md" }, { "Информация" = "vipnet/informatsiya.md" } ] },
   { "FAQ" = "faq/index.md" }
 ]
 
