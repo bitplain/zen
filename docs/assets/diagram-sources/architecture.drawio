@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2024-01-01T00:00:00.000Z" agent="zen-docs" version="20.8.16">
+  <diagram id="architecture" name="Site flow">
+    <mxGraphModel dx="960" dy="540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="2" value="Content" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6f4ff;strokeColor=#60a5fa;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="3" value="Build" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf3;strokeColor=#34d399;" vertex="1" parent="1">
+          <mxGeometry x="260" y="120" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="4" value="Publish" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#fbbf24;" vertex="1" parent="1">
+          <mxGeometry x="440" y="120" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="5" value="" style="endArrow=block;html=1;strokeColor=#60a5fa;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="6" value="" style="endArrow=block;html=1;strokeColor=#34d399;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
