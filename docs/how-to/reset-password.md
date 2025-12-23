@@ -1,6 +1,6 @@
 ---
 title: "Сброс пароля"
-icon: lucide/key
+icon: material/key
 ---
 
 # Сброс пароля

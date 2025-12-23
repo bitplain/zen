@@ -1,6 +1,6 @@
 ---
 title: "FAQ"
-icon: lucide/help-circle
+icon: material/help-circle-outline
 ---
 
 # Часто задаваемые вопросы

@@ -1,6 +1,6 @@
 ---
 title: "Справочник"
-icon: lucide/book-open
+icon: material/book-open-page-variant
 ---
 
 # Справочные материалы

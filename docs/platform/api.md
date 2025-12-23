@@ -1,6 +1,6 @@
 ---
 title: "API"
-icon: lucide/code-2
+icon: material/code-json
 ---
 
 # API справочник

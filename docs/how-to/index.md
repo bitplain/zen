@@ -1,6 +1,6 @@
 ---
 title: "How-to"
-icon: lucide/wrench
+icon: material/wrench
 ---
 
 # Пошаговые инструкции

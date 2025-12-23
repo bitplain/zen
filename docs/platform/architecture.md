@@ -1,6 +1,6 @@
 ---
 title: "Архитектура"
-icon: lucide/cpu
+icon: material/server
 ---
 
 # Архитектурный обзор

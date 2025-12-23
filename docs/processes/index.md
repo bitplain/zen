@@ -1,6 +1,6 @@
 ---
 title: "Процессы"
-icon: lucide/flowchart
+icon: material/chart-timeline-variant
 ---
 
 # Регламенты и процедуры

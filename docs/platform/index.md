@@ -1,6 +1,6 @@
 ---
 title: "Платформа"
-icon: lucide/layers
+icon: material/lan
 ---
 
 # Обзор платформы
