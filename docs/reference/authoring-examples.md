@@ -1,5 +1,5 @@
 ---
-icon: lucide/book-open
+icon: material/book-open-variant
 ---
 
 # Authoring examples
