@@ -1,5 +1,5 @@
 ---
-icon: lucide/repeat
+icon: material/repeat
 ---
 
 # Content workflow
