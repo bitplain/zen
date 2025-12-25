@@ -1,5 +1,5 @@
 ---
-icon: lucide/terminal
+icon: material/console-line
 ---
 
 # CLI commands at a glance

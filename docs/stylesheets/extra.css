@@ -1,0 +1,125 @@
+/* Сужаем ширину контента для лучшей читаемости на десктопе */
+.md-main__inner {
+  max-width: 1120px;
+}
+
+/* Apple-like минимализм: нейтральные тона, чистые границы и системный шрифт */
+:root {
+  --kb-surface: #f5f6f8;
+  --kb-border: #e5e5ea;
+  --kb-ink: #1d1d1f;
+  --kb-muted: #6e6e73;
+  --kb-primary: #0a84ff;
+  --kb-primary-soft: #e8f2ff;
+
+  --md-default-bg-color: var(--kb-surface);
+  --md-default-fg-color: var(--kb-ink);
+  --md-primary-fg-color: var(--kb-primary);
+  --md-primary-fg-color--light: #4ca0ff;
+  --md-primary-fg-color--dark: #0060df;
+}
+
+body,
+.md-typeset {
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Inter", sans-serif;
+  color: var(--kb-ink);
+}
+
+.md-header {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--kb-border);
+}
+
+.md-nav__title,
+.md-logo,
+.md-header__title {
+  color: var(--kb-ink);
+  font-weight: 600;
+}
+
+.md-tabs {
+  background: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid var(--kb-border);
+}
+
+/* Таблицы и карточки в строгом стиле */
+.md-typeset table {
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--kb-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.25);
+}
+
+.md-typeset table th,
+.md-typeset table td {
+  border: 1px solid var(--kb-border);
+  padding: 0.5rem 0.75rem;
+}
+
+.md-typeset table th {
+  background: #fdfdff;
+  color: var(--kb-muted);
+  font-weight: 600;
+}
+
+/* Подсветка CTA-ссылок в стиле Apple (тонкая линия и мягкий фон при ховере) */
+.md-typeset a.cta {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  font-weight: 600;
+  color: var(--kb-primary);
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.08rem;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.md-typeset a.cta:hover {
+  background: var(--kb-primary-soft);
+  border-color: transparent;
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Карточки и блоки содержимого */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 14px;
+  border: 1px solid var(--kb-border);
+  box-shadow: 0 12px 30px -22px rgba(0, 0, 0, 0.35);
+  background: #fff;
+}
+
+.md-typeset code {
+  background: #f2f4f7;
+  color: #0f172a;
+  padding: 0.15rem 0.35rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.md-typeset pre code {
+  border-radius: 12px;
+  border: 1px solid #dfe3e8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  letter-spacing: -0.01em;
+  color: #111114;
+}
+
+.md-typeset p {
+  color: var(--kb-muted);
+}
+
+.md-typeset strong {
+  color: var(--kb-ink);
+}

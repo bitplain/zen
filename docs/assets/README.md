@@ -1,5 +1,5 @@
 ---
-icon: lucide/folder
+icon: material/folder-outline
 ---
 
 # Assets

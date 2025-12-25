@@ -11,23 +11,23 @@
 # The site_name is shown in the page header and the browser window title
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "Zensical Documentation"
+site_name = "Acme Knowledge Base"
 
 # The site_description is included in the HTML head and should contain a
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "Official documentation for the Zensical platform, authoring patterns, and contributor workflow."
+site_description = "Корпоративная база знаний: архитектура, процессы, инструкции."
 
 # The site_author attribute. This is used in the HTML head element.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_author
-site_author = "Zensical Documentation Team"
+site_author = "Knowledge Team"
 
 # The site_url is the canonical URL for your site. When building online
 # documentation you should set this.
 # Read more: https://zensical.org/docs/setup/basics/#site_url
-site_url = "https://zensical.org/docs"
+site_url = "https://kb.example.com/"
 
 # The copyright notice appears in the page footer and can contain an HTML
 # fragment.
@@ -44,10 +44,15 @@ Copyright &copy; 2025 The authors
 # can be defined using TOML syntax.
 #
 # Read more: https://zensical.org/docs/setup/navigation/
-# nav = [
-#   { "Get started" = "index.md" },
-#   { "Markdown in 5min" = "markdown.md" },
-# ]
+nav = [
+  { "Обзор" = "index.md" },
+  { "Платформа" = [ { "Обзор" = "platform/index.md" }, { "Архитектура" = "platform/architecture.md" }, { "API" = "platform/api.md" } ] },
+  { "Процессы" = "processes/index.md" },
+  { "How-to" = [ { "Обзор" = "how-to/index.md" }, { "Сброс пароля" = "how-to/reset-password.md" } ] },
+  { "Справочник" = "reference/index.md" },
+  { "ViPNet" = [ { "Обзор" = "vipnet/index.md" }, { "Обновление" = "vipnet/obnovlenie.md" }, { "Инструкции" = "vipnet/instruktsii.md" }, { "Команды" = "vipnet/komandy.md" }, { "Информация" = "vipnet/informatsiya.md" } ] },
+  { "FAQ" = "faq/index.md" }
+]
 
 # With the "extra_css" option you can add your own CSS styling to customize
 # your Zensical project according to your needs. You can add any number of
@@ -57,7 +62,7 @@ Copyright &copy; 2025 The authors
 #
 # Read more: https://zensical.org/docs/customization/#additional-css
 #
-extra_css = ["assets/styles/custom.css"]
+extra_css = ["stylesheets/extra.css"]
 
 # With the `extra_javascript` option you can add your own JavaScript to your
 # project to customize the behavior according to your needs.
@@ -65,7 +70,7 @@ extra_css = ["assets/styles/custom.css"]
 # The path provided should be relative to the "docs_dir".
 #
 # Read more: https://zensical.org/docs/customization/#additional-javascript
-extra_javascript = ["assets/scripts/enhancements.js"]
+extra_javascript = ["javascripts/extra.js"]
 
 # ----------------------------------------------------------------------------
 # Section for configuring theme options
@@ -108,7 +113,7 @@ favicon = "assets/branding/favicon.svg"
 # Read more:
 # - https://zensical.org/docs/setup/language/
 #
-language = "en"
+language = "ru"
 
 # Zensical provides a number of feature toggles that change the behavior
 # of the documentation site.
@@ -204,7 +209,7 @@ features = [
     # When pruning is enabled, only the visible navigation items are included
     # in the rendered HTML, reducing the size of the built site by 33% or more.
     # https://zensical.org/docs/setup/navigation/#navigation-pruning
-    #"navigation.prune",
+    "navigation.prune",
 
     # When sections are enabled, top-level sections are rendered as groups in
     # the sidebar for viewports above 1220px, but remain as-is on mobile.
@@ -259,12 +264,12 @@ features = [
 # ----------------------------------------------------------------------------
 [[project.theme.palette]]
 scheme = "default"
-toggle.icon = "lucide/sun"
+toggle.icon = "material/white-balance-sunny"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 scheme = "slate"
-toggle.icon = "lucide/moon"
+toggle.icon = "material/weather-night"
 toggle.name = "Switch to light mode"
 
 # ----------------------------------------------------------------------------
@@ -293,7 +298,8 @@ toggle.name = "Switch to light mode"
 # - https://zensical.org/docs/authoring/icons-emojis/#search
 # ----------------------------------------------------------------------------
 [project.theme.icon]
-logo = "assets/branding/logo.svg"
+# Используем встроенную иконку из набора Material; при наличии кастомного файла перенесите его в docs/assets/branding и укажите путь без дублирования расширений.
+logo = "material/rocket-launch"
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.
