@@ -21,7 +21,11 @@ const ensureSmoothAnchors = () => {
 ensureSmoothAnchors();
 
 // Полноэкранная авторизация до показа контента
-const AUTH_STORAGE_KEY = 'kb-auth-granted';
+const AUTH_STORAGE_KEY = 'kb-auth-session';
+
+// Хэши допустимых учётных данных (SHA-256) — логин "admin" и пароль "120488"
+const VALID_LOGIN_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+const VALID_PASSWORD_HASH = 'e81eab89b751a01a21fd595df109cd030d84cac0815fc385e3a926ec8bb34d8c';
 
 const canUseStorage = () => {
   try {
@@ -34,12 +38,59 @@ const canUseStorage = () => {
   }
 };
 
-const isAuthenticated = () =>
-  canUseStorage() && localStorage.getItem(AUTH_STORAGE_KEY) === '1';
+const decodeSession = () => {
+  if (!canUseStorage()) return null;
+  const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (!raw) return null;
 
-const persistAuth = () => {
+  // Совместимость со старой записью
+  if (raw === '1') {
+    return { user: 'admin (legacy)' };
+  }
+
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    return null;
+  }
+};
+
+const isAuthenticated = () => Boolean(decodeSession());
+
+const persistAuth = user => {
   if (!canUseStorage()) return;
-  localStorage.setItem(AUTH_STORAGE_KEY, '1');
+  const payload = { user, ts: Date.now() };
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
+};
+
+const clearAuth = () => {
+  if (!canUseStorage()) return;
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+};
+
+const digestText = async text => {
+  if (!window.crypto?.subtle) {
+    throw new Error('Crypto API недоступен');
+  }
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+};
+
+const verifyCredentials = async (login, password) => {
+  try {
+    const [loginHash, passwordHash] = await Promise.all([
+      digestText(login.trim()),
+      digestText(password)
+    ]);
+    return loginHash === VALID_LOGIN_HASH && passwordHash === VALID_PASSWORD_HASH;
+  } catch (error) {
+    // Если не удалось посчитать хэш, блокируем доступ
+    return false;
+  }
 };
 
 const buildAuthGate = () => {
@@ -54,7 +105,7 @@ const buildAuthGate = () => {
       <p class="kb-auth-gate__eyebrow">Корпоративный доступ</p>
       <h2 class="kb-auth-gate__title" id="kb-auth-gate-title">Вход в базу знаний</h2>
       <p class="kb-auth-gate__description">
-        Все материалы доступны только после проверки учётных данных. Используйте корпоративный Apple ID или SSO.
+        Все материалы доступны только после проверки учётных данных. Введите служебный логин и пароль, чтобы продолжить.
       </p>
       <div class="kb-auth-gate__badge" aria-hidden="true">
         <svg fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12l2 2 4-4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -76,12 +127,12 @@ const buildAuthGate = () => {
         <p class="kb-auth__subtitle">Мы заблокировали навигацию, пока не проверим ваши данные.</p>
         <form class="kb-auth__form" id="kb-auth-form">
           <label class="kb-auth__field">
-            <span>Служебный e-mail</span>
-            <input type="email" name="email" placeholder="name@company.com" required />
+            <span>Логин</span>
+            <input type="text" name="login" placeholder="admin" autocomplete="username" required />
           </label>
           <label class="kb-auth__field">
             <span>Пароль</span>
-            <input type="password" name="password" placeholder="••••••••" minlength="8" required />
+            <input type="password" name="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required />
           </label>
           <label class="kb-auth__checkbox">
             <input type="checkbox" name="remember" checked />
@@ -107,71 +158,88 @@ const lockUntilAuth = () => {
 
   const form = gate.querySelector('#kb-auth-form');
   const status = gate.querySelector('#kb-auth-status');
-  const emailInput = gate.querySelector('input[name="email"]');
+  const loginInput = gate.querySelector('input[name="login"]');
+  const submitButton = gate.querySelector('.kb-auth__submit');
 
-  if (emailInput) {
-    emailInput.focus();
+  if (loginInput) {
+    loginInput.focus();
   }
 
   form.addEventListener('submit', event => {
     event.preventDefault();
     const formData = new FormData(form);
-    const email = (formData.get('email') || '').toString().trim();
+    const login = (formData.get('login') || '').toString().trim();
     const password = (formData.get('password') || '').toString();
 
-    if (!email || !password) {
+    if (!login || !password) {
       status.textContent = 'Укажите учётные данные.';
       status.classList.add('is-error');
       return;
     }
 
+    submitButton.disabled = true;
     status.classList.remove('is-error');
-    status.textContent = 'Проверяем доступ через SSO...';
+    status.textContent = 'Проверяем доступ...';
 
-    setTimeout(() => {
-      status.textContent = 'Доступ подтверждён. Загружаем базу знаний...';
-      persistAuth();
-      document.documentElement.classList.remove('kb-auth-locked');
-      gate.remove();
-    }, 600);
+    verifyCredentials(login, password)
+      .then(ok => {
+        if (!ok) {
+          status.textContent = 'Неверный логин или пароль.';
+          status.classList.add('is-error');
+          submitButton.disabled = false;
+          loginInput?.focus();
+          return;
+        }
+
+        status.textContent = 'Доступ подтверждён. Загружаем базу знаний...';
+        persistAuth(login);
+        document.documentElement.classList.remove('kb-auth-locked');
+        gate.remove();
+        ensureSessionControls();
+      })
+      .catch(() => {
+        status.textContent = 'Не удалось проверить доступ. Попробуйте ещё раз.';
+        status.classList.add('is-error');
+        submitButton.disabled = false;
+      });
   });
 };
 
+const ensureSessionControls = () => {
+  const session = decodeSession();
+  const existing = document.querySelector('.kb-session-pill');
+  if (!session) {
+    existing?.remove();
+    return;
+  }
+
+  if (existing) return;
+
+  const pill = document.createElement('div');
+  pill.className = 'kb-session-pill';
+  pill.innerHTML = `
+    <div class="kb-session-pill__user">
+      <span class="kb-session-pill__label">Вы вошли как</span>
+      <strong>${session.user || 'admin'}</strong>
+    </div>
+    <button type="button" class="kb-session-pill__action">Выйти</button>
+  `;
+
+  pill.querySelector('.kb-session-pill__action')?.addEventListener('click', () => {
+    clearAuth();
+    pill.remove();
+    lockUntilAuth();
+  });
+
+  document.body.appendChild(pill);
+};
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', lockUntilAuth);
+  document.addEventListener('DOMContentLoaded', () => {
+    lockUntilAuth();
+    ensureSessionControls();
+  });
 } else {
   lockUntilAuth();
-}
-
-// Демонстрационная обработка формы авторизации
-const initAuthForm = () => {
-  const form = document.getElementById('kb-auth-form');
-  const status = document.getElementById('kb-auth-status');
-  if (!form || !status) return;
-
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const email = (formData.get('email') || '').toString().trim();
-    const password = (formData.get('password') || '').toString();
-
-    if (!email || !password) {
-      status.textContent = 'Укажите учётные данные.';
-      status.classList.add('is-error');
-      return;
-    }
-
-    status.classList.remove('is-error');
-    status.textContent = 'Проверяем доступ через SSO...';
-
-    setTimeout(() => {
-      status.textContent = 'Готово: переходим в защищённую зону базы знаний.';
-    }, 500);
-  });
-};
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initAuthForm);
-} else {
-  initAuthForm();
+  ensureSessionControls();
 }
