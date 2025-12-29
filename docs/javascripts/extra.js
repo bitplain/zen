@@ -57,6 +57,14 @@ const decodeSession = () => {
 
 const isAuthenticated = () => Boolean(decodeSession());
 
+const applyPrelockIfNeeded = () => {
+  if (!isAuthenticated()) {
+    document.documentElement.classList.add('kb-auth-prelock');
+  } else {
+    document.documentElement.classList.remove('kb-auth-prelock');
+  }
+};
+
 const persistAuth = user => {
   if (!canUseStorage()) return;
   const payload = { user, ts: Date.now() };
@@ -155,6 +163,9 @@ const lockUntilAuth = () => {
   const gate = buildAuthGate();
   document.documentElement.classList.add('kb-auth-locked');
   document.body.appendChild(gate);
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove('kb-auth-prelock');
+  });
 
   const form = gate.querySelector('#kb-auth-form');
   const status = gate.querySelector('#kb-auth-status');
@@ -194,6 +205,7 @@ const lockUntilAuth = () => {
         status.textContent = 'Доступ подтверждён. Загружаем базу знаний...';
         persistAuth(login);
         document.documentElement.classList.remove('kb-auth-locked');
+        document.documentElement.classList.remove('kb-auth-prelock');
         gate.remove();
         ensureSessionControls();
       })
@@ -234,12 +246,15 @@ const ensureSessionControls = () => {
   document.body.appendChild(pill);
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    lockUntilAuth();
-    ensureSessionControls();
-  });
-} else {
+applyPrelockIfNeeded();
+
+const initAuth = () => {
   lockUntilAuth();
   ensureSessionControls();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAuth);
+} else {
+  initAuth();
 }
