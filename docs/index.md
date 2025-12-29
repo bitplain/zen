@@ -5,44 +5,17 @@ icon: material/home
 
 # Добро пожаловать в корпоративную базу знаний
 
-<div class="kb-hero">
+<div class="kb-hero kb-hero--solo">
   <div class="kb-hero__body">
     <p class="kb-hero__eyebrow">Вся экспертиза — в одном месте</p>
     <h1 class="kb-hero__title">Минимализм, скорость и контроль в стиле Apple</h1>
     <p class="kb-hero__lead">
-      Сайт построен на Zensical: мгновенная навигация, продуманные шаблоны и защищённый доступ для команды.
+      Сайт построен на Zensical: мгновенная навигация, продуманные шаблоны и защищённый доступ только после авторизации.
     </p>
+    <div class="kb-hero__badge">Доступ открывается после проверки учётных данных</div>
     <div class="kb-hero__actions">
       <a class="cta" href="platform/index.md">Перейти к платформе</a>
       <a class="cta kb-hero__link" href="faq/index.md">Найти ответ в FAQ</a>
-    </div>
-  </div>
-  <div class="kb-auth">
-    <div class="kb-auth__chrome">
-      <span class="kb-auth__dot kb-auth__dot--red"></span>
-      <span class="kb-auth__dot kb-auth__dot--amber"></span>
-      <span class="kb-auth__dot kb-auth__dot--green"></span>
-    </div>
-    <div class="kb-auth__panel">
-      <p class="kb-auth__title">Вход в базу знаний</p>
-      <p class="kb-auth__subtitle">Используйте корпоративный Apple ID или SSO.</p>
-      <form class="kb-auth__form" id="kb-auth-form">
-        <label class="kb-auth__field">
-          <span>Служебный e-mail</span>
-          <input type="email" name="email" placeholder="name@company.com" required />
-        </label>
-        <label class="kb-auth__field">
-          <span>Пароль</span>
-          <input type="password" name="password" placeholder="••••••••" minlength="8" required />
-        </label>
-        <label class="kb-auth__checkbox">
-          <input type="checkbox" name="remember" checked />
-          <span>Оставаться в системе</span>
-        </label>
-        <button type="submit" class="kb-auth__submit">Войти</button>
-        <p class="kb-auth__hint">Нет доступа? Свяжитесь с владельцем раздела.</p>
-        <p class="kb-auth__status" id="kb-auth-status" role="status" aria-live="polite"></p>
-      </form>
     </div>
   </div>
 </div>
