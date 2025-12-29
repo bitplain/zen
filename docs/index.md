@@ -5,7 +5,20 @@ icon: material/home
 
 # Добро пожаловать в корпоративную базу знаний
 
-Сайт построен на Zensical и оптимизирован под масштабирование: четкая навигация, быстрый поиск и понятные шаблоны страниц.
+<div class="kb-hero kb-hero--solo">
+  <div class="kb-hero__body">
+    <p class="kb-hero__eyebrow">Вся экспертиза — в одном месте</p>
+    <h1 class="kb-hero__title">Минимализм, скорость и контроль в стиле Apple</h1>
+    <p class="kb-hero__lead">
+      Сайт построен на Zensical: мгновенная навигация, продуманные шаблоны и защищённый доступ только после авторизации.
+    </p>
+    <div class="kb-hero__badge">Доступ открывается после проверки учётных данных</div>
+    <div class="kb-hero__actions">
+      <a class="cta" href="platform/index.md">Перейти к платформе</a>
+      <a class="cta kb-hero__link" href="faq/index.md">Найти ответ в FAQ</a>
+    </div>
+  </div>
+</div>
 
 ## Быстрый старт
 
