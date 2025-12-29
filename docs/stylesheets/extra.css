@@ -3,6 +3,20 @@
   max-width: 1120px;
 }
 
+/* На главной странице отключаем ограничение ширины и убираем боковые отступы */
+body[data-md-name="index"] .md-main__inner {
+  max-width: none;
+  width: min(1400px, calc(100vw - 48px));
+}
+
+body[data-md-name="index"] .md-content {
+  width: 100%;
+}
+
+body[data-md-name="index"] .md-content__inner {
+  padding: 0;
+}
+
 /* Apple-like минимализм: нейтральные тона, чистые границы и системный шрифт */
 :root {
   --kb-surface: #f5f6f8;
@@ -560,10 +574,19 @@ html.kb-auth-prelock body {
   margin: 2rem 0 0.5rem;
 }
 
+.kb-hub--full {
+  margin: 0;
+  padding: 1.25rem 0 2rem;
+}
+
+.kb-hub--full .kb-hub__grid {
+  min-height: calc(100vh - 7rem);
+}
+
 .kb-hub__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.35rem;
 }
 
 .kb-hub__card {
