@@ -142,3 +142,36 @@ if (document.readyState === 'loading') {
 } else {
   lockUntilAuth();
 }
+
+// Демонстрационная обработка формы авторизации
+const initAuthForm = () => {
+  const form = document.getElementById('kb-auth-form');
+  const status = document.getElementById('kb-auth-status');
+  if (!form || !status) return;
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const email = (formData.get('email') || '').toString().trim();
+    const password = (formData.get('password') || '').toString();
+
+    if (!email || !password) {
+      status.textContent = 'Укажите учётные данные.';
+      status.classList.add('is-error');
+      return;
+    }
+
+    status.classList.remove('is-error');
+    status.textContent = 'Проверяем доступ через SSO...';
+
+    setTimeout(() => {
+      status.textContent = 'Готово: переходим в защищённую зону базы знаний.';
+    }, 500);
+  });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAuthForm);
+} else {
+  initAuthForm();
+}
